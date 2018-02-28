@@ -12,7 +12,7 @@ previous = {
     'light': -100,
     'tilt_x': 0,
     'tilt_y': 0,
-    'motion': 0,
+    'motion': 'false',
     'uv': 0,
     'ir': 0,
     'humidity': 0,
@@ -106,6 +106,20 @@ def light_twitter_check(light, twitter_handle, photon_id=None):
         previous['light'] = light
     except Exception as e:
         print(e)
+
+def motion_twitter_check(motion, twitter_handle, photon_id=None):
+    try:
+        msg = ''
+        if(motion == previous['motion']):
+            if (photon_id != None):
+                msg += photon_id + ' says: '
+            msg += 'Motion Detected in this room.'
+            send_direct_message(msg, twitter_handle)
+            print(msg)
+        previous['motion'] = motion
+    except Exception as e:
+        print(e)
+
 
 
 def is_not_close(new, old):
